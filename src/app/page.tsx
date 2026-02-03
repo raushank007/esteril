@@ -1,64 +1,80 @@
-import Image from "next/image";
+// src/app/page.tsx
+import Navbar from '@/components/Navbar';
+import Badge from '@/components/ui/Badge';
+import { MOCK_SYSTEMS } from '@/lib/mockData';
+import Link from 'next/link';
 
-export default function Home() {
+export default function HomePage() {
+  // We'll just show the first 3 products as a "Featured" section
+  const featuredSystems = MOCK_SYSTEMS.slice(0, 3);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-white">
+
+
+      <main>
+        {/* 1. Hero Section */}
+        <section className="relative bg-slate-900 py-24 px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
+              Efficiency Driven by <span className="text-blue-500">Experience</span>
+            </h1>
+            <p className="text-xl text-slate-400 mb-10 leading-relaxed max-w-3xl mx-auto">
+              We engineer automated processing systems for the Pharmaceutical industry.
+              From R&D to Commercial Manufacturing, we deliver confidence.
+            </p>
+            <Link
+              href="/systems"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg shadow-blue-900/20"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+              Explore Solutions
+            </Link>
+          </div>
+        </section>
+
+        {/* 2. Featured Products Grid */}
+        <section className="max-w-7xl mx-auto py-20 px-6">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-3xl font-bold text-slate-900">Featured Systems</h2>
+              <p className="text-slate-500 mt-2">Precision equipment for sterile processing.</p>
+            </div>
+            <Link href="/systems" className="text-blue-600 font-semibold hover:underline">
+              View all products →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredSystems.map((system) => (
+              <div key={system._id} className="group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all bg-white">
+                <div className="aspect-video bg-slate-100 relative overflow-hidden">
+                  <img
+                    src={system.mainImage}
+                    alt={system.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex gap-2 mb-3">
+                    <Badge text={system.category} type="category" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">{system.title}</h3>
+                  <div className="flex flex-wrap gap-1 mb-6">
+                    {system.compliance.map(cert => (
+                      <Badge key={cert} text={cert} />
+                    ))}
+                  </div>
+                  <Link
+                    href={`/systems/${system.slug}`}
+                    className="block w-full text-center py-3 border border-slate-900 text-slate-900 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition-all"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );
