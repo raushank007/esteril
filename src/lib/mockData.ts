@@ -9,6 +9,7 @@ export interface SterileSystem {
   compliance: string[];
   model3dUrl: string;
   // New fields added to accommodate the scraped content
+  subDescription?: string;
   description?: string;
   advantages?: string[];
   technicalSpecs: { label: string; value: string }[];
