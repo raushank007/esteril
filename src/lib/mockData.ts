@@ -16,6 +16,7 @@ export interface SterileSystem {
 
 const TEST_MODEL_PATH = "/models/test-vessel.glb";
 
+
 export const MOCK_SYSTEMS: SterileSystem[] = [
   {
     _id: "sys_001",
@@ -24,7 +25,8 @@ export const MOCK_SYSTEMS: SterileSystem[] = [
     category: "Vessel",
     compliance: ["USFDA", "cGMP", "ASME BPE", "21 CFR Part 11"],
     model3dUrl: TEST_MODEL_PATH,
-    mainImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800",
+    mainImage: "/images/Esteril-Process-Solutions-Maufacturing-Skid-1.webp",
+    subDescription: "Our SIP system skids offer automatic sterilization with flexible process parameters, portable design, and semi-automated operation.",
     description: "Our sterile manufacturing vessels are ideal for preparing a wide range of products, including injections, sterile formulations, small-volume preparations, and inhaler solutions. Our fully integrated Manufacturing Vessels/Skids offer a complete end-to-end solution, seamlessly designed to support aseptic processes with 100% cleanability and drainability.",
     advantages: [
       "Tailor-Made for Specific Products/Processes",
@@ -47,7 +49,8 @@ export const MOCK_SYSTEMS: SterileSystem[] = [
     category: "Vessel",
     compliance: ["USFDA", "cGMP", "ASME BPE", "21 CFR Part 11"],
     model3dUrl: TEST_MODEL_PATH,
-    mainImage: "https://plus.unsplash.com/premium_photo-1661962692059-55d5a4319814?q=80&w=800",
+    mainImage: "images/Esteril-Process-Solutions-Sterile-Holding-Vessel.webp",
+    subDescription: "Our SIP system skids offer automatic sterilization with flexible process parameters, portable design, and semi-automated operation.",
     description: "In pharmaceutical production, various liquids with different properties play a critical role, making their safe and proper storage essential. Fully customizable and optimized for medium to high capacities, our holding systems guarantee 100% cleanability and drainability, providing a reliable solution for your production needs.",
     advantages: [
       "Tailor-Made for Specific Products/Processes",
@@ -70,7 +73,8 @@ export const MOCK_SYSTEMS: SterileSystem[] = [
     category: "Skid",
     compliance: ["USFDA", "cGMP", "ASME BPE", "21 CFR Part 11"],
     model3dUrl: TEST_MODEL_PATH,
-    mainImage: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800",
+    mainImage: "images/Esteril-Process-Solutions-CIP-System.webp",
+    subDescription: "Our SIP system skids offer automatic sterilization with flexible process parameters, portable design, and semi-automated operation.",
     description: "Cleaning-In-Place (CIP) and Sterilization-In-Place (SIP) systems are designed for automatic cleaning and disinfecting, ensuring seamless sanitization and sterilization. These modular, skidded systems are available in both automated and semi-automated models, tailored to the specific time cycles required for cleaning large, fixed, multi-tank systems.",
     advantages: [
       "No Separate Installation Required",
@@ -93,7 +97,8 @@ export const MOCK_SYSTEMS: SterileSystem[] = [
     category: "Skid",
     compliance: ["USFDA", "cGMP", "ASME BPE"],
     model3dUrl: TEST_MODEL_PATH,
-    mainImage: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800",
+    mainImage: "images/Esteril-Process-Solutions-In-Situ-CIP-SIP-System.webp",
+    subDescription: "Our SIP system skids offer automatic sterilization with flexible process parameters, portable design, and semi-automated operation.",
     description: "Cleaning-In-Place (CIP) systems provide an efficient solution for system sanitization. We specialize in the design, development, manufacturing, supply, and installation of both mobile and fixed CIP units. Fully customizable, modular, and skidded.",
     advantages: [
       "Fast and Easy Installation",
@@ -116,8 +121,9 @@ export const MOCK_SYSTEMS: SterileSystem[] = [
     category: "Skid",
     compliance: ["USFDA", "cGMP", "ASME BPE", "21 CFR Part 11"],
     model3dUrl: TEST_MODEL_PATH,
-    mainImage: "https://images.unsplash.com/photo-1532187863486-abf51ad9f69d?q=80&w=800",
-    description: "Sterilization-In-Place (SIP) systems are designed for automatic disinfection, providing a reliable solution for sterilization needs. We supply and install both mobile and fixed SIP units, tailored to the required sterilization time cycle.",
+    mainImage: "images/Esteril-Process-Solutions-SIP-System.webp",
+    subDescription: "Our SIP system skids offer automatic sterilization with flexible process parameters, portable design, and semi-automated operation.",
+    description: "Sterilization-In-Place (SIP) systems are designed for automatic disinfection, providing a reliable solution for sterilization needs. We design, develop, manufacture, supply, and install both mobile and fixed SIP units. These units are custom-made, modular, and skidded, available in automated or semi-automated models, tailored to the required sterilization time cycle for everything from portable units to large, fixed multi-tank systems.",
     advantages: [
       "Fast and Easy Installation",
       "Portable and Compact",
@@ -125,7 +131,8 @@ export const MOCK_SYSTEMS: SterileSystem[] = [
       "Tailor-Made for Custom Requirements"
     ],
     technicalSpecs: [
-      { label: "Safety", value: "Sanitary moisture separator & pressure regulating valve" },
+         { label: "Compliance", value: "Automation as per USFDA, 21 CFR part 11" },
+      { label: "Safety", value: "Sanitary designed as per US FDA/cGMP/ASME compliance with ASME-BPE norms" },
       { label: "Automation", value: "Flexible process parameters setting (Recipes)" },
       { label: "Welding", value: "Orbital tube welding" },
       { label: "Connections", value: "Sterile flange connections of top dish" }
@@ -138,8 +145,9 @@ export const MOCK_SYSTEMS: SterileSystem[] = [
     category: "Automation",
     compliance: ["USFDA", "21 CFR Part 11", "GAMP 5"],
     model3dUrl: TEST_MODEL_PATH,
-    mainImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800",
-    description: "At Esteril Process Solutions, we develop reliable, user-friendly automation systems that streamline and seamlessly sequence processes. Our system designs ensure the harmonious integration of various equipment, optimizing performance and efficiency.",
+    mainImage: "images/Esteril-Process-Solutions-Automation.webp",
+    subDescription: "Custom automation systems by Esteril Process Solutions ensure reliability, user-friendliness, and seamless process integration.",
+    description: "At Esteril Process Solutions, we develop reliable, user-friendly automation systems that streamline and seamlessly sequence processes. Our system designs ensure the harmonious integration of various equipment, optimizing performance and efficiency. With extensive experience and a deep understanding of process requirements, we deliver automation solutions that are not only optimized and safe but also easy to use.Our highly skilled, experienced, and well-trained electrical and automation teams work closely with process specialists to design and implement precise automation sequences. We recommend and use highly reliable, accurate instruments and controls to ensure consistency and repeatability across your automated systems.",
     advantages: [
       "Harmonious integration of equipment",
       "Optimized and safe operations",

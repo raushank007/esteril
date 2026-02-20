@@ -6,8 +6,9 @@ export default function ServicesPage() {
     <main className="bg-white min-h-screen pb-24">
 
       {/* 1. Hero & Commitment Section */}
-      <section className="bg-slate-900 text-white py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="bg-slate-900 text-white py-24 px-6 relative overflow-hidden">
+         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000')] bg-cover bg-center opacity-10 mix-blend-overlay" />
+        <div className="relative max-w-4xl mx-auto text-center z-10">
           <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tight">
             Our <span className="text-blue-500">Services</span>
           </h1>
@@ -29,7 +30,7 @@ export default function ServicesPage() {
       <section className="max-w-7xl mx-auto px-6 py-20 space-y-24">
 
         {/* Service 1: Boroscopy */}
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <div className="flex items-center gap-4 mb-6">
               <div className="bg-blue-50 p-4 rounded-xl">
@@ -66,21 +67,37 @@ export default function ServicesPage() {
               </div>
             </div>
           </div>
-          {/* Visual Placeholder for Service 1 */}
-          <div className="order-1 md:order-2 bg-slate-100 rounded-3xl aspect-square md:aspect-auto h-full min-h-[400px] flex items-center justify-center relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent" />
-            <Camera className="text-slate-300 w-32 h-32 group-hover:scale-110 transition-transform duration-500" />
-            <span className="absolute bottom-6 text-slate-400 font-bold tracking-widest uppercase text-sm">Boroscopy Inspection</span>
+
+          {/* Visual Refactor for Service 1 */}
+          <div className="order-1 md:order-2 bg-slate-100 rounded-3xl aspect-[4/3] relative overflow-hidden group shadow-xl">
+            <img
+              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000"
+              alt="Boroscopy Inspection"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 flex items-center gap-3">
+              <Camera className="text-blue-400 w-6 h-6" />
+              <span className="text-white font-bold tracking-widest uppercase text-sm">Boroscopy Inspection</span>
+            </div>
           </div>
         </div>
 
         {/* Service 2: Orbital Welding */}
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Visual Placeholder for Service 2 */}
-          <div className="bg-slate-100 rounded-3xl aspect-square md:aspect-auto h-full min-h-[400px] flex items-center justify-center relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-bl from-blue-600/10 to-transparent" />
-            <Zap className="text-slate-300 w-32 h-32 group-hover:scale-110 transition-transform duration-500" />
-            <span className="absolute bottom-6 text-slate-400 font-bold tracking-widest uppercase text-sm">Orbital Welding</span>
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+
+          {/* Visual Refactor for Service 2 */}
+          <div className="bg-slate-100 rounded-3xl aspect-[4/3] relative overflow-hidden group shadow-xl">
+            <img
+              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000"
+              alt="Orbital Welding"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 flex items-center gap-3">
+               <Zap className="text-blue-400 w-6 h-6" />
+               <span className="text-white font-bold tracking-widest uppercase text-sm">Orbital Welding</span>
+            </div>
           </div>
 
           <div>
@@ -122,7 +139,7 @@ export default function ServicesPage() {
         </div>
 
         {/* Service 3: Electropolishing */}
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <div className="flex items-center gap-4 mb-6">
               <div className="bg-blue-50 p-4 rounded-xl">
@@ -158,24 +175,32 @@ export default function ServicesPage() {
               </div>
             </div>
           </div>
-          {/* Visual Placeholder for Service 3 */}
-          <div className="order-1 md:order-2 bg-slate-100 rounded-3xl aspect-square md:aspect-auto h-full min-h-[400px] flex items-center justify-center relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent" />
-            <Sparkles className="text-slate-300 w-32 h-32 group-hover:scale-110 transition-transform duration-500" />
-            <span className="absolute bottom-6 text-slate-400 font-bold tracking-widest uppercase text-sm">Surface Finish &lt; 0.3 Ra</span>
+
+          {/* Visual Refactor for Service 3 */}
+          <div className="order-1 md:order-2 bg-slate-100 rounded-3xl aspect-[4/3] relative overflow-hidden group shadow-xl">
+            <img
+              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000"
+              alt="Electropolishing Surface Finish"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 flex items-center gap-3">
+               <Sparkles className="text-blue-400 w-6 h-6" />
+               <span className="text-white font-bold tracking-widest uppercase text-sm">Surface Finish &lt; 0.3 Ra</span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 3. Custom Design & Validation Process (FAT/SAT) */}
-      <section className="bg-slate-50 py-20 px-6 border-t border-slate-200">
+      <section className="bg-slate-50 py-24 px-6 border-t border-slate-200">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center p-3 bg-white rounded-full shadow-sm mb-4">
-              <PenTool className="text-blue-600" size={24} />
+            <div className="inline-flex items-center justify-center p-4 bg-white rounded-2xl shadow-sm mb-6 border border-slate-100">
+              <PenTool className="text-blue-600" size={32} />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Custom Design & Validation</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Custom Design & Validation</h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               Technology integration and design synthesis are at the core of our systems.
               We provide comprehensive documentation including DQ, IQ, OQ, P&ID, and isometric drawings.
             </p>
@@ -183,31 +208,35 @@ export default function ServicesPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* FAT Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-600">
-              <div className="flex items-center gap-3 mb-4">
-                <ClipboardCheck className="text-blue-600" size={28} />
-                <h3 className="text-xl font-bold text-slate-900">Factory Acceptance Test (FAT)</h3>
+            <div className="bg-white p-10 rounded-3xl shadow-xl shadow-slate-200/50 border-t-4 border-blue-600 hover:-translate-y-1 transition-transform">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="bg-blue-50 p-3 rounded-xl">
+                  <ClipboardCheck className="text-blue-600" size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900">Factory Acceptance Test (FAT)</h3>
               </div>
-              <p className="text-slate-600 text-sm leading-relaxed mb-4">
+              <p className="text-slate-600 leading-relaxed mb-6">
                 All equipment undergoes a rigorous FAT at our facility. We invite customers to review the system’s construction,
                 performance, and documentation firsthand before dispatch.
               </p>
-              <div className="bg-blue-50 text-blue-800 px-4 py-2 rounded-lg text-xs font-bold inline-block">
+              <div className="bg-slate-900 text-white px-4 py-2 rounded-lg text-xs font-bold inline-block tracking-widest uppercase">
                 Location: Esteril Facility
               </div>
             </div>
 
             {/* SAT Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-emerald-500">
-              <div className="flex items-center gap-3 mb-4">
-                <CheckCircle className="text-emerald-500" size={28} />
-                <h3 className="text-xl font-bold text-slate-900">Site Acceptance Test (SAT)</h3>
+            <div className="bg-white p-10 rounded-3xl shadow-xl shadow-slate-200/50 border-t-4 border-emerald-500 hover:-translate-y-1 transition-transform">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="bg-emerald-50 p-3 rounded-xl">
+                  <CheckCircle className="text-emerald-500" size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900">Site Acceptance Test (SAT)</h3>
               </div>
-              <p className="text-slate-600 text-sm leading-relaxed mb-4">
+              <p className="text-slate-600 leading-relaxed mb-6">
                 Conducted once installed on-site. Equipment is connected to utilities, and comprehensive test results are reported,
                 including handling of any deviations, in the presence of the client.
               </p>
-              <div className="bg-emerald-50 text-emerald-800 px-4 py-2 rounded-lg text-xs font-bold inline-block">
+              <div className="bg-slate-900 text-white px-4 py-2 rounded-lg text-xs font-bold inline-block tracking-widest uppercase">
                 Location: Client Site
               </div>
             </div>

@@ -17,7 +17,7 @@ export default function Footer() {
               Validated aseptic systems designed for USFDA & cGMP compliance.
             </p>
             <div className="flex gap-4 pt-2">
-              <a href="#" className="hover:text-white transition-colors"><Linkedin size={20} /></a>
+              <a href="https://www.linkedin.com/company/esterilprocess/" className="hover:text-white transition-colors"><Linkedin size={20} /></a>
               <a href="#" className="hover:text-white transition-colors"><Twitter size={20} /></a>
             </div>
           </div>
@@ -51,7 +51,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-blue-600 shrink-0" />
-                <span>+91 98765 43210</span>
+                <span>+91 98190 37120</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-blue-600 shrink-0" />

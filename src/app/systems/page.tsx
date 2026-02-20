@@ -39,6 +39,13 @@ export default function SystemsPage() {
             <div className="p-6 flex flex-col flex-grow">
               <h3 className="text-xl font-bold text-slate-900 mb-2">{system.title}</h3>
 
+              {/* New: Display a 2-line snippet of the description */}
+                            {system.subDescription && (
+                              <p className="text-slate-500 text-sm mb-4">
+                                {system.subDescription}
+                              </p>
+                            )}
+
               {/* Compliance Badges */}
               <div className="flex flex-wrap gap-1 mb-6">
                 {system.compliance.map(cert => (
