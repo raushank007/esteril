@@ -1,8 +1,15 @@
 // src/app/about/page.tsx
 import { Target, Eye, Award, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import { client } from '@/sanity/lib/client';
 
-export default function AboutPage() {
+export default  async function AboutPage() {
+    // 3. Fetch the stats. We use [0] because we only have one Settings document.
+      const query = `*[_type == "siteSettings"][0] {
+        companyStats
+      }`;
+      const data = await client.fetch(query);
+      const stats = data?.companyStats || []; // Fallback to empty array if nothing is published yet
   return (
     <main className="min-h-screen bg-white pb-24">
 
@@ -26,24 +33,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 2. FLOATING STATS BAR */}
-      <section className="relative z-20 -mt-12 max-w-5xl mx-auto px-6">
-        <div className="bg-white rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100 p-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100">
-            {[
-              { label: "Years Experience", value: "25+" },
-              { label: "Systems Delivered", value: "500+" },
-              { label: "Multinational Clients", value: "100+" },
-              { label: "Quality Focus", value: "100%" }
-            ].map((stat) => (
-              <div key={stat.label} className="px-4">
-                <div className="text-4xl font-black text-blue-600 mb-1">{stat.value}</div>
-                <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">{stat.label}</div>
+      {/* 2. FLOATING STATS BAR (Now Dynamic!) */}
+            <section className="relative z-20 -mt-12 max-w-5xl mx-auto px-6">
+              <div className="bg-white rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100 p-10">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100">
+
+                  {/* Map over our live Sanity stats */}
+                  {stats.map((stat: { label: string, value: string }) => (
+                    <div key={stat.label} className="px-4">
+                      <div className="text-4xl font-black text-blue-600 mb-1">{stat.value}</div>
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">{stat.label}</div>
+                    </div>
+                  ))}
+
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </section>
 
       {/* 3. WHO WE ARE (Modern Split Layout) */}
       <section className="max-w-7xl mx-auto px-6 py-32">

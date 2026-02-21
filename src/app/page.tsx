@@ -1,8 +1,14 @@
 // src/app/page.tsx
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Settings, Factory, Activity, CheckCircle2 } from 'lucide-react';
+import { client } from '@/sanity/lib/client';
 
-export default function HomePage() {
+export default async function HomePage() {
+    // 1. Fetch the live stats from Sanity
+      const query = `*[_type == "siteSettings"][0] {
+        companyStats
+      }`;
+      const data = await client.fetch(query);
   return (
     <main className="min-h-screen bg-white">
 
@@ -44,22 +50,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. TRUST & STATS BAR */}
-      <section className="bg-blue-600 text-white py-12 relative z-20 -mt-8 mx-6 md:mx-auto max-w-7xl rounded-2xl shadow-2xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-8 divide-x divide-blue-500/50">
-          {[
-            { label: "Years Experience", value: "25+" },
-            { label: "Systems Delivered", value: "500+" },
-            { label: "Global Clients", value: "100+" },
-            { label: "Cleanability", value: "100%" }
-          ].map((stat, i) => (
-            <div key={i} className="text-center px-4">
-              <div className="text-3xl md:text-4xl font-black mb-1">{stat.value}</div>
-              <div className="text-xs md:text-sm font-bold text-blue-200 uppercase tracking-wider">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 2. TRUST & STATS BAR (Now Dynamic) */}
+            <section className="bg-blue-600 text-white py-12 relative z-20 -mt-8 mx-6 md:mx-auto max-w-7xl rounded-2xl shadow-2xl">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-8 divide-x divide-blue-500/50">
+
+                {/* Map over the live Sanity stats */}
+                {stats.map((stat: { label: string; value: string }, i: number) => (
+                  <div key={i} className="text-center px-4">
+                    <div className="text-3xl md:text-4xl font-black mb-1">{stat.value}</div>
+                    <div className="text-xs md:text-sm font-bold text-blue-200 uppercase tracking-wider">{stat.label}</div>
+                  </div>
+                ))}
+
+              </div>
+            </section>
 
       {/* 3. CORE SOLUTIONS GRID */}
       <section className="py-32 px-6 max-w-7xl mx-auto">
