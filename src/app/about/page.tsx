@@ -4,12 +4,25 @@ import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 
 export default  async function AboutPage() {
-    // 3. Fetch the stats. We use [0] because we only have one Settings document.
-      const query = `*[_type == "siteSettings"][0] {
-        companyStats
-      }`;
-      const data = await client.fetch(query);
-      const stats = data?.companyStats || []; // Fallback to empty array if nothing is published yet
+   // 1. UPDATED QUERY: We now ask for companyStats AND the leadershipTeam (with image URLs resolved)
+     const query = `*[_type == "siteSettings"][0] {
+       companyStats,
+       leadershipTeam[]{
+         name,
+         role,
+         "imageUrl": image.asset->url
+       }
+     }`;
+
+     const data = await client.fetch(query);
+
+     // 2. Set up our variables with safe fallbacks
+     const stats = data?.companyStats || [];
+     const team = data?.leadershipTeam || [
+       // Fallback just in case Sanity hasn't published yet
+       { name: "Shishir Mishra", role: "Founder", imageUrl: "/images/founder.jpeg" },
+       { name: "Madhumeeta Kumari", role: "Processing engineering", imageUrl: "/images/madhu.jpeg" }
+     ];
   return (
     <main className="min-h-screen bg-white pb-24">
 
@@ -142,33 +155,30 @@ export default  async function AboutPage() {
         </div>
       </section>
 
-      {/* 5. LEADERSHIP TEAM */}
-      <section className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Meet the <span className="text-blue-600">Leadership</span></h2>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto">The engineering minds and quality auditors behind our success.</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {[
-            { name: "Shishir Mishra", role: "Founder", img: "images/founder.jpeg" },
-            { name: "Madhumeeta Kumari", role: "Processing engineering", img: "images/madhu.jpeg" },
-
-          ].map((member) => (
-            <div key={member.name} className="group cursor-pointer">
-              <div className="bg-slate-100 rounded-3xl aspect-square mb-6 overflow-hidden relative">
-                <img
-                  src={member.img}
-                  alt={member.name}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                />
+      {/* 5. LEADERSHIP TEAM (Now Dynamic!) */}
+            <section className="py-32 px-6 max-w-7xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Meet the <span className="text-blue-600">Leadership</span></h2>
+                <p className="text-lg text-slate-500 max-w-2xl mx-auto">The engineering minds and quality auditors behind our success.</p>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900">{member.name}</h3>
-              <p className="text-blue-600 font-bold text-sm tracking-widest uppercase mt-1">{member.role}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
+              {/* Adjusted to grid-cols-2 to perfectly fit your 2 founders, or it will auto-expand if you add a 3rd! */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {team.map((member: { name: string; role: string; imageUrl: string }) => (
+                  <div key={member.name} className="group cursor-pointer">
+                    <div className="bg-slate-100 rounded-3xl aspect-square mb-6 overflow-hidden relative">
+                      <img
+                        src={member.imageUrl}
+                        alt={member.name}
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900">{member.name}</h3>
+                    <p className="text-blue-600 font-bold text-sm tracking-widest uppercase mt-1">{member.role}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
     </main>
   );

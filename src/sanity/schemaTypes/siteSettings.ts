@@ -10,24 +10,37 @@ export const siteSettingsType = defineType({
       name: 'title',
       title: 'Internal Title',
       type: 'string',
-      description: 'Just for you to identify this document (e.g., "Global Site Data").',
       initialValue: 'Global Site Data',
     }),
     defineField({
       name: 'companyStats',
       title: 'Company Statistics',
-      description: 'Add your 4 main stats here. They will appear on the Home and About pages.',
       type: 'array',
       of: [
         {
           type: 'object',
           fields: [
             { name: 'value', title: 'Value (e.g., 25+)', type: 'string' },
-            { name: 'label', title: 'Label (e.g., Years Experience)', type: 'string' },
+            { name: 'label', title: 'Label', type: 'string' },
           ],
         },
       ],
-      validation: (Rule) => Rule.max(4), // Keeps the design from breaking!
+    }),
+    // NEW: Leadership Team Array
+    defineField({
+      name: 'leadershipTeam',
+      title: 'Leadership Team',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'name', title: 'Name', type: 'string', validation: (Rule) => Rule.required() },
+            { name: 'role', title: 'Role/Title', type: 'string', validation: (Rule) => Rule.required() },
+            { name: 'image', title: 'Profile Image', type: 'image', options: { hotspot: true } },
+          ],
+        },
+      ],
     }),
   ],
 });
