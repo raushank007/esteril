@@ -26,6 +26,40 @@ export const siteSettingsType = defineType({
         },
       ],
     }),
+    // NEW: Footer & Contact Information
+        defineField({
+          name: 'footerSettings',
+          title: 'Footer & Contact Info',
+          description: 'Update the company details shown in the website footer.',
+          type: 'object',
+          fields: [
+            {
+              name: 'description',
+              title: 'Company Description',
+              type: 'text',
+              initialValue: 'Precision engineering for the pharmaceutical industry. Validated aseptic systems designed for USFDA & cGMP compliance.',
+              rows: 3
+            },
+            {
+              name: 'address',
+              title: 'Physical Address',
+              type: 'string',
+              initialValue: '123 Industrial Estate, Peenya, Bangalore'
+            },
+            {
+              name: 'phone',
+              title: 'Phone Number',
+              type: 'string',
+              initialValue: '+91 98190 37120'
+            },
+            {
+              name: 'email',
+              title: 'Contact Email',
+              type: 'string',
+              initialValue: 'sales@esteril.in'
+            },
+          ]
+        }),
     // NEW: Dynamic Form Endpoints (Key/Value pairs)
         defineField({
           name: 'formEndpoints',
