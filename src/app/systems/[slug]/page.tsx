@@ -1,17 +1,40 @@
-import { MOCK_SYSTEMS } from '@/lib/mockData';
+// src/app/systems/[slug]/page.tsx
+import { client } from '@/sanity/lib/client';
 import ProductDetail from '@/components/ProductDetail';
 import Link from 'next/link';
 
+// 1. Tell Next.js which pages to pre-build based on Sanity slugs
 export async function generateStaticParams() {
-  return MOCK_SYSTEMS.map((system) => ({
+  const query = `*[_type == "system"]{ "slug": slug.current }`;
+  const slugs = await client.fetch(query);
+
+  return slugs.map((system: { slug: string }) => ({
     slug: system.slug,
   }));
 }
 
+// 2. Fetch the specific product data for this URL
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = MOCK_SYSTEMS.find((p) => p.slug === slug);
 
+  // This GROQ query finds the ONE system where the slug matches the URL
+  const query = `*[_type == "system" && slug.current == $slug][0]{
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    compliance,
+    "imageUrl": mainImage.asset->url,
+    model3dUrl,
+    description,
+    advantages,
+    technicalSpecs
+  }`;
+
+  // We pass the slug as a variable to the query securely
+  const product = await client.fetch(query, { slug });
+
+  // If someone types a wrong URL, show this
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
@@ -23,8 +46,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     );
   }
 
+  // 3. Render the page using our existing ProductDetail UI
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
+
       {/* Breadcrumb Navigation */}
       <div className="bg-white border-b border-slate-200 px-6 py-4 mb-8">
         <div className="max-w-7xl mx-auto flex items-center text-sm">
@@ -37,6 +62,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
+        {/* We pass the live Sanity data straight into your beautiful UI component! */}
         <ProductDetail system={product} />
       </div>
     </div>
