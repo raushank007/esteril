@@ -4,6 +4,7 @@ import ProductDetail from '@/components/ProductDetail';
 import Link from 'next/link';
 
 // 1. Tell Next.js which pages to pre-build based on Sanity slugs
+export const revalidate = 60; // Revalidates the page every 60 seconds
 export async function generateStaticParams() {
   const query = `*[_type == "system"]{ "slug": slug.current }`;
   const slugs = await client.fetch(query);

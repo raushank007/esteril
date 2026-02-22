@@ -7,6 +7,8 @@ import { client } from '@/sanity/lib/client';
 // 2. Write the GROQ Query
 // This asks Sanity for all documents of type "system"
 // The 'imageUrl' line is a neat trick to resolve the image reference directly to a URL
+// Add this ONE line right here:
+export const revalidate = 60; // Revalidates the page every 60 seconds
 const SYSTEMS_QUERY = `*[_type == "system"]{
   _id,
   title,

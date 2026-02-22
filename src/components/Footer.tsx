@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { client } from '@/sanity/lib/client';
 
+export const revalidate = 60; // Revalidates the page every 60 seconds
 export default async function Footer() {
   // 1. Fetch the live footer data from Sanity
   const query = `*[_type == "siteSettings"][0].footerSettings`;

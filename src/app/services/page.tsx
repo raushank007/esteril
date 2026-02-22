@@ -2,6 +2,8 @@
 import { Camera, Zap, Sparkles, PenTool, CheckCircle, ClipboardCheck, Microscope, Factory, Settings } from 'lucide-react';
 import { client } from '@/sanity/lib/client';
 
+
+export const revalidate = 60; // Revalidates the page every 60 seconds
 export default async function ServicesPage() {
 
   // 1. Fetch live data

@@ -5,6 +5,7 @@ import { CheckCircle2 } from 'lucide-react';
 import VesselViewer from './vessels/VesselViewer';
 import InquiryModal from './InquiryModal';
 
+
 export default function ProductDetail({ system }: { system: any }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

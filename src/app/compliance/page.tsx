@@ -4,6 +4,7 @@ import { client } from '@/sanity/lib/client';
 // 1. Import your new component!
 import PdfPreviewBox from '@/components/PdfPreviewBox';
 
+export const revalidate = 60; // Revalidates the page every 60 seconds
 export default async function CompliancePage() {
 
   const query = `*[_type == "compliancePage"][0] {

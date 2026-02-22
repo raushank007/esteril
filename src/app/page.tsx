@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Settings, Factory, Activity, CheckCircle2 } from 'lucide-react';
 import { client } from '@/sanity/lib/client';
 
+export const revalidate = 60; // Revalidates the page every 60 seconds
 export default async function HomePage() {
   // 1. Fetch the live stats from Sanity
   const query = `*[_type == "siteSettings"][0] {
