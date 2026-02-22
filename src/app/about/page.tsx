@@ -3,6 +3,7 @@ import { Target, Eye, Award, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 
+export const revalidate = 60;
 export default  async function AboutPage() {
    // 1. UPDATED QUERY: We now ask for companyStats AND the leadershipTeam (with image URLs resolved)
      const query = `*[_type == "siteSettings"][0] {
