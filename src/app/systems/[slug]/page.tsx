@@ -29,7 +29,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     model3dUrl,
     description,
     advantages,
-    technicalSpecs
+    technicalSpecs,
+    "modelUrl": threeDModel.asset->url
   }`;
 
   // We pass the slug as a variable to the query securely

@@ -59,6 +59,16 @@ export const systemType = defineType({
       type: 'array',
       of: [{ type: 'string' }],
     }),
+    // NEW: 3D Model Upload Field
+        defineField({
+          name: 'threeDModel',
+          title: '3D Model (.glb)',
+          description: 'Upload the 3D .glb file generated from TRELLIS here.',
+          type: 'file',
+          options: {
+            accept: '.glb', // This ensures your team can ONLY upload the correct 3D file type!
+          },
+        }),
     defineField({
       name: 'technicalSpecs',
       title: 'Technical Specifications',

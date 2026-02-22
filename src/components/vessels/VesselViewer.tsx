@@ -3,6 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useGLTF, Stage, PresentationControls, OrbitControls, Html } from "@react-three/drei";
 import { Suspense, useState } from "react";
+import { Cuboid } from "lucide-react"; // Optional: A nice icon for the fallback state
 
 function Model({ url }: { url: string }) {
   const { scene } = useGLTF(url);
@@ -29,9 +30,22 @@ function Hotspot({ position, label }: { position: [number, number, number], labe
   );
 }
 
-export default function VesselViewer({ modelPath }: { modelPath: string }) {
+// 1. Make modelPath optional (?) so TypeScript doesn't yell if Sanity data is missing
+export default function VesselViewer({ modelPath }: { modelPath?: string }) {
+
+  // 2. Safety Check: If no file was uploaded to Sanity, show a beautiful fallback box instead of crashing
+  if (!modelPath) {
+    return (
+      <div className="h-full min-h-[500px] w-full bg-slate-50 flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300">
+        <Cuboid className="w-12 h-12 text-slate-300 mb-4" />
+        <p className="text-slate-500 font-medium">3D Model rendering in progress...</p>
+      </div>
+    );
+  }
+
+  // 3. If modelPath exists (the Sanity CDN URL), render the canvas!
   return (
-    <div className="h-full min-h-[500px] w-full bg-slate-50 relative cursor-move">
+    <div className="h-full min-h-[500px] w-full bg-slate-50 relative cursor-move rounded-3xl overflow-hidden border border-slate-200">
       <Canvas dpr={[1, 2]} camera={{ fov: 45 }}>
         <Suspense fallback={<Loader />}>
           <PresentationControls speed={1.5} global zoom={0.7} polar={[-0.1, Math.PI / 4]}>
@@ -51,7 +65,10 @@ export default function VesselViewer({ modelPath }: { modelPath: string }) {
 function Loader() {
   return (
     <Html center>
-      <div className="text-slate-500 font-bold text-sm animate-pulse">Loading Model...</div>
+      <div className="bg-white px-4 py-2 rounded-full shadow-lg border border-slate-100 flex items-center gap-3">
+        <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        <span className="text-slate-700 font-bold text-sm">Loading 3D Model...</span>
+      </div>
     </Html>
   );
 }

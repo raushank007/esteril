@@ -15,7 +15,7 @@ export default function ProductDetail({ system }: { system: any }) {
 
         {/* Left: Interactive 3D */}
         <div className="bg-slate-50 relative border-r border-slate-100 min-h-[400px] lg:min-h-full">
-          <VesselViewer modelPath={system.model3dUrl} />
+          <VesselViewer modelPath={system.modelUrl} />
         </div>
 
         {/* Right: Technical Specs & Content */}
