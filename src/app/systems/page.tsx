@@ -1,29 +1,11 @@
-// src/app/systems/page.tsx
 import Link from 'next/link';
 import Badge from '@/components/ui/Badge';
-// 1. Import the Sanity client (Adjust the path if your sanity folder is outside src)
-import { client } from '@/sanity/lib/client';
+// 1. Import your local markdown helper instead of Sanity
+import { getAllSystemsData } from '@/lib/markdown';
 
-// 2. Write the GROQ Query
-// This asks Sanity for all documents of type "system"
-// The 'imageUrl' line is a neat trick to resolve the image reference directly to a URL
-// Add this ONE line right here:
-export const revalidate = 60; // Revalidates the page every 60 seconds
-const SYSTEMS_QUERY = `*[_type == "system"]{
-  _id,
-  title,
-  "slug": slug.current,
-  category,
-  compliance,
-  "imageUrl": mainImage.asset->url,
-  description
-}`;
-
-// 3. Make the page async so it can fetch data on the server
 export default async function SystemsPage() {
-
-  // 4. Fetch the live data
-  const systems = await client.fetch(SYSTEMS_QUERY);
+  // 2. Fetch the data directly from your local .md files!
+  const systems = getAllSystemsData();
 
   return (
     <main className="min-h-screen bg-slate-50 pt-20">
@@ -40,8 +22,8 @@ export default async function SystemsPage() {
 
       {/* 2. The Dynamic Product Grid */}
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-        {/* We map over the live 'systems' array now, not the mock data! */}
-        {systems.map((system: any) => (
+        {/* Mapping over the local markdown data */}
+        {systems.map((system) => (
           <div key={system._id} className="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
 
             {/* Product Image */}
@@ -103,7 +85,6 @@ export default async function SystemsPage() {
           <div className="grid md:grid-cols-3 gap-10 relative">
             <div className="hidden md:block absolute top-10 left-[16%] right-[16%] h-1 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 z-0" />
 
-            {/* Steps omitted for brevity in snippet, leave your existing 3 steps here! */}
             <div className="relative z-10 bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/40 hover:-translate-y-2 transition-transform duration-300 group">
               <div className="w-20 h-20 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-blue-600/30 text-3xl font-black group-hover:scale-110 transition-transform">1</div>
               <h3 className="text-2xl font-bold text-slate-900 mb-4">Tailored Solution</h3>

@@ -1,82 +1,25 @@
-// src/app/services/page.tsx
 import { Camera, Zap, Sparkles, PenTool, CheckCircle, ClipboardCheck, Microscope, Factory, Settings } from 'lucide-react';
-import { client } from '@/sanity/lib/client';
+// Import the new markdown helper
+import { getServicesPageData } from '@/lib/markdown';
 
-
-export const revalidate = 60; // Revalidates the page every 60 seconds
 export default async function ServicesPage() {
+  // Fetch the data synchronously from the local file system
+  const pageData = getServicesPageData();
 
-  // 1. Fetch live data
-  const query = `*[_type == "servicesPage"][0] {
-    title,
-    introParagraph1,
-    introParagraph2,
-    services[]{
-      title,
-      description,
-      objectives,
-      advantages,
-      imageCaption,
-      "imageUrl": image.asset->url
-    },
-    validationSection
-  }`;
-
-  const data = await client.fetch(query);
-
-  // 2. Safe Fallbacks using your exact text
-  const pageData = data || {
-    title: "Our Services",
-    introParagraph1: "At Esteril Process Solutions, we are fully committed to being customer-focused, ensuring that every promise we make is one we can deliver on time and with precision.",
-    introParagraph2: "As a performance-driven and customer-centric company, we are constantly striving to improve every aspect of our business. This dedication ensures that our products and services consistently meet or exceed our clients’ expectations, fostering trust and long-term success.",
-    services: [
-      {
-        title: "Boroscopy / Videoscopy",
-        description: "We provide Boroscopy services widely utilized across pharmaceuticals, chemical plants, and food processing. These services are essential for ensuring the integrity and quality of equipment in critical applications.",
-        objectives: ["Inspect pipes for internal surface finish & weld joints.", "Determine internal defects (corrosion, pitting, cracks).", "Detect foreign objects (dust, chips).", "Documentation of orbital welding joints."],
-        advantages: ["High-Resolution image documentation.", "Concentrated remote operation.", "Compatible with various subject observations."],
-        imageUrl: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800",
-        imageCaption: "Boroscopy Inspection"
-      },
-      {
-        title: "Orbital Welding Service",
-        description: "A precise technique where the welding tool rotates 360° around a stationary workpiece. Using computer-controlled systems, we produce consistent, repeatable welds with minimal operator intervention.",
-        objectives: ["Consistent, high-quality TIG weld joints.", "Determine erosion or extraneous problems.", "Minimize operator error in tube welding."],
-        advantages: ["Boosts productivity with automation.", "Program saving & printout of parameters.", "Improved workplace safety.", "Easy to repeat quality (Validation ready)."],
-        imageUrl: "https://images.unsplash.com/photo-1504917595217-d414ba2087ce?q=80&w=800",
-        imageCaption: "Orbital Welding"
-      },
-      {
-        title: "Electropolishing Service",
-        description: "An electrochemical process that removes surface material through anodic dissolution. This technique levels micro-peaks and valleys, creating an ultra-clean, corrosion-resistant surface.",
-        objectives: ["Remove micro peaks & valleys.", "Create surfaces easier to sterilize.", "Improve anticorrosive properties."],
-        advantages: ["Superior to mechanical polishing.", "Lustrous, aesthetically improved finish.", "Microscopically smooth surface."],
-        imageUrl: "https://images.unsplash.com/photo-1611288875704-3700b0d36cb7?q=80&w=800",
-        imageCaption: "Surface Finish < 0.3 Ra"
-      }
-    ],
-    validationSection: {
-      title: "Custom Design & Validation",
-      intro: "Technology integration and design synthesis are at the core of our systems. We provide comprehensive documentation including DQ, IQ, OQ, P&ID, and isometric drawings.",
-      fat: {
-        title: "Factory Acceptance Test (FAT)",
-        description: "All equipment undergoes a rigorous FAT at our facility. We invite customers to review the system’s construction, performance, and documentation firsthand before dispatch.",
-        location: "Esteril Facility"
-      },
-      sat: {
-        title: "Site Acceptance Test (SAT)",
-        description: "Conducted once installed on-site. Equipment is connected to utilities, and comprehensive test results are reported, including handling of any deviations, in the presence of the client.",
-        location: "Client Site"
-      }
-    }
-  };
+  // If the file is missing, provide an ultimate fallback so the page doesn't crash
+  if (!pageData) {
+      return (
+          <div className="min-h-screen flex items-center justify-center">
+              <h1 className="text-2xl font-bold">Services content not found.</h1>
+          </div>
+      );
+  }
 
   // Icon array to keep the UI dynamic and beautiful
   const iconList = [Camera, Zap, Sparkles, Factory, Settings];
 
   return (
     <main className="bg-white min-h-screen pb-24">
-
       {/* 1. HERO SECTION */}
       <section className="bg-slate-900 text-white py-24 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000')] bg-cover bg-center opacity-10 mix-blend-overlay" />
@@ -93,7 +36,7 @@ export default async function ServicesPage() {
 
       {/* 2. DYNAMIC SERVICES LIST */}
       <section className="max-w-7xl mx-auto px-6 py-20 space-y-24">
-        {pageData.services?.map((service: any, i: number) => {
+        {pageData.services.map((service: any, i: number) => {
 
           // Select an icon from our list, loop back if we have more services than icons
           const MainIcon = iconList[i % iconList.length];
@@ -101,7 +44,6 @@ export default async function ServicesPage() {
 
           return (
             <div key={i} className="grid md:grid-cols-2 gap-12 items-center">
-
               {/* Text Block */}
               <div className={isEven ? "order-2 md:order-1" : "order-2"}>
                 <div className="flex items-center gap-4 mb-6">
@@ -203,7 +145,6 @@ export default async function ServicesPage() {
           </div>
         </div>
       </section>
-
     </main>
   );
 }

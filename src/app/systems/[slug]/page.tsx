@@ -1,43 +1,23 @@
-// src/app/systems/[slug]/page.tsx
-import { client } from '@/sanity/lib/client';
-import ProductDetail from '@/components/ProductDetail';
 import Link from 'next/link';
+import ProductDetail from '@/components/ProductDetail';
+// 1. Import your local markdown helpers instead of Sanity
+import { getAllSystemSlugs, getSystemBySlug } from '@/lib/markdown';
 
-// 1. Tell Next.js which pages to pre-build based on Sanity slugs
-export const revalidate = 60; // Revalidates the page every 60 seconds
+// 2. Generate static routes at build time based on your local .md files
 export async function generateStaticParams() {
-  const query = `*[_type == "system"]{ "slug": slug.current }`;
-  const slugs = await client.fetch(query);
-
-  return slugs.map((system: { slug: string }) => ({
-    slug: system.slug,
-  }));
+  const slugs = getAllSystemSlugs();
+  return slugs; // Returns an array like: [{ slug: 'cip-sip-system' }, ...]
 }
 
-// 2. Fetch the specific product data for this URL
+// 3. Fetch the local markdown data for this specific URL
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  // This GROQ query finds the ONE system where the slug matches the URL
-  const query = `*[_type == "system" && slug.current == $slug][0]{
-    _id,
-    title,
-    "slug": slug.current,
-    category,
-    compliance,
-    "imageUrl": mainImage.asset->url,
-    model3dUrl,
-    description,
-    advantages,
-    technicalSpecs,
-    "modelUrl": threeDModel.asset->url
-  }`;
+  // Retrieve the parsed markdown file
+  const systemData = getSystemBySlug(slug);
 
-  // We pass the slug as a variable to the query securely
-  const product = await client.fetch(query, { slug });
-
-  // If someone types a wrong URL, show this
-  if (!product) {
+  // If someone types a wrong URL or the markdown file doesn't exist, show this
+  if (!systemData) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">System Not Found</h1>
@@ -48,7 +28,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     );
   }
 
-  // 3. Render the page using our existing ProductDetail UI
+  // 4. Format the markdown data to exactly match what your ProductDetail component expects
+  const formattedProduct = {
+    _id: systemData.slug,
+    slug: systemData.slug,
+    title: systemData.frontmatter.title,
+    category: systemData.frontmatter.category,
+    compliance: systemData.frontmatter.compliance,
+    imageUrl: systemData.frontmatter.imageUrl,
+    model3dUrl: systemData.frontmatter.model3dUrl,
+    // We use the main markdown body as the primary description
+    description: systemData.content,
+    advantages: systemData.frontmatter.advantages,
+    // Make sure to pass the technical specs if your .md files have them
+    technicalSpecs: (systemData.frontmatter as any).technicalSpecs || [],
+  };
+
+  // 5. Render the page using our existing ProductDetail UI
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
 
@@ -59,13 +55,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <span className="mx-2 text-slate-300">/</span>
           <Link href="/systems" className="text-slate-500 hover:text-blue-600 font-medium">Systems</Link>
           <span className="mx-2 text-slate-300">/</span>
-          <span className="text-slate-900 font-bold truncate">{product.title}</span>
+          <span className="text-slate-900 font-bold truncate">{formattedProduct.title}</span>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
-        {/* We pass the live Sanity data straight into your beautiful UI component! */}
-        <ProductDetail system={product} />
+        {/* We pass the local Markdown data straight into your UI component! */}
+        <ProductDetail system={formattedProduct} />
       </div>
     </div>
   );

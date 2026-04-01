@@ -1,16 +1,12 @@
-// src/components/Footer.tsx
 import Link from 'next/link';
 import { MapPin, Phone, Mail } from 'lucide-react';
-import { client } from '@/sanity/lib/client';
+// 1. Import your local markdown helper
+import { getFooterData } from '@/lib/markdown';
 
-export const revalidate = 60; // Revalidates the page every 60 seconds
 export default async function Footer() {
-  // 1. Fetch the live footer data from Sanity
-  const query = `*[_type == "siteSettings"][0].footerSettings`;
-  const footerData = await client.fetch(query);
-
-  // 2. Fallbacks matching your exact provided text
-  const data = footerData || {
+  // 2. Fetch the global footer settings from the local file system
+  const data = getFooterData() || {
+    // Ultimate fallback just in case the file goes missing
     description: "Precision engineering for the pharmaceutical industry. Validated aseptic systems designed for USFDA & cGMP compliance.",
     address: "123 Industrial Estate, Peenya, Bangalore",
     phone: "+91 98190 37120",
